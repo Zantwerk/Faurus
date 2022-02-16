@@ -1,0 +1,10 @@
+import sounddevice as sd
+import soundfile as sf
+
+array, smp_rt = sf.read(path_of_file, dtype='float32')
+
+sd.play(array, smp_rt)
+
+status = sd.wait()
+
+sd.stop() 
