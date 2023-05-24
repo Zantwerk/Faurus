@@ -1,13 +1,10 @@
-import pyudev
+import glob
 
 def get_usb_address():
-    context = pyudev.Context()
-    for device in context.list_devices(subsystem='block', DEVTYPE='disk'):
-        if 'ID_BUS' in device and device['ID_BUS'] == 'usb':
-            partitions = [device.device_node for device in context.list_devices(subsystem='block', DEVTYPE='partition', parent=device)]
-            if partitions:
-                return partitions[0]
-
+    usb_paths = glob.glob('/media/pi/*')
+    if usb_paths:
+        return usb_paths[0]
+    
     return None
 
 # Exemple d'utilisation
