@@ -1,0 +1,17 @@
+import psutil
+
+def get_usb_address():
+    partitions = psutil.disk_partitions(all=True)
+    
+    for partition in partitions:
+        if partition.mountpoint.startswith('/media/pi'):
+            return partition.mountpoint
+    
+    return None
+
+# Exemple d'utilisation
+adresseUSB = get_usb_address()
+if adresseUSB is not None:
+    print("Adresse de la clé USB :", adresseUSB)
+else:
+    print("Impossible d'accéder au chemin de la clé USB.")
