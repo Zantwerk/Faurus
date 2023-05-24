@@ -4,9 +4,9 @@ def get_usb_address():
     context = pyudev.Context()
     for device in context.list_devices(subsystem='block', DEVTYPE='disk'):
         if 'ID_BUS' in device and device['ID_BUS'] == 'usb':
-            for partition in device.get_all_partitions():
-                if partition.mountpoint and partition.mountpoint.startswith('/media/pi'):
-                    return partition.mountpoint
+            partitions = [device.device_node for device in context.list_devices(subsystem='block', DEVTYPE='partition', parent=device)]
+            if partitions:
+                return partitions[0]
 
     return None
 
